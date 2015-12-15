@@ -13,7 +13,8 @@ fi
 sudo apt-get install -y lsof
 
 # Install Neo4j
-sudo wget --content-disposition http://neo4j.com/artifact.php?name=neo4j-community-${VERSION}-unix.tar.gz
-sudo tar xzf neo4j-community-${VERSION}-unix.tar.gz -C /usr/local
-sudo rm -f neo4j-community-${VERSION}-unix.tar.gz
-sudo ln -s /usr/local/neo4j-community-${VERSION}/bin/neo4j /usr/local/bin/neo4j
+wget -O - https://debian.neo4j.org/neotechnology.gpg.key | sudo apt-key add -
+echo 'deb http://debian.neo4j.org/repo stable/' >/tmp/neo4j.list
+sudo mv /tmp/neo4j.list /etc/apt/sources.list.d
+sudo apt-get update
+sudo apt-get install neo4j=${VERSION}

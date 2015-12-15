@@ -24,27 +24,19 @@ sudo apt-get install -y \
   libcurl4-openssl-dev
 
 # Install CouchDB
-sudo wget http://mirrors.gigenet.com/apache/couchdb/source/${VERSION}/apache-couchdb-${VERSION}.tar.gz
-sudo tar xzf apache-couchdb-${VERSION}.tar.gz 
-cd apache-couchdb-${VERSION}
-./configure 
-make 
-sudo make install
-cd .. && sudo rm -rf apache-couchdb-*
+sudo apt-get install software-properties-common -y
+sudo add-apt-repository ppa:couchdb/stable -y
+sudo apt-get update
+sudo apt-get remove couchdb couchdb-bin couchdb-common -yf
+sudo apt-get install couchdb -y
 
 # Postinstallation setup
-sudo chown -R couchdb:couchdb /usr/local/etc/couchdb
-sudo chown -R couchdb:couchdb /usr/local/var/lib/couchdb
-sudo chown -R couchdb:couchdb /usr/local/var/log/couchdb
-sudo chown -R couchdb:couchdb /usr/local/var/run/couchdb
-sudo chmod 0770 /usr/local/etc/couchdb
-sudo chmod 0770 /usr/local/var/lib/couchdb
-sudo chmod 0770 /usr/local/var/log/couchdb
-sudo chmod 0770 /usr/local/var/run/couchdb
-sudo cp /usr/local/etc/init.d/couchdb /etc/init.d/couchdb
+sudo stop couchdb
+sudo chown -R couchdb:couchdb /usr/lib/couchdb /usr/share/couchdb /etc/couchdb /usr/bin/couchdb
+sudo chmod -R 0770 /usr/lib/couchdb /usr/share/couchdb /etc/couchdb /usr/bin/couchdb
 
 # Start couchdb service
-sudo service couchdb start
-
+mkdir /var/run/couchdb
+touch /var/run/couchdb/couch.uri
 # Check if couchdb is running
 # curl http://localhost:5984
