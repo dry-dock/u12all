@@ -15,8 +15,10 @@ build:
     pull: false
 
   ci:
-    # We can add sanity checks to ensure the image was built successfully here
-    - echo "Hello, World!"
+    - /u12all/test/_couchdb.sh
+    - /u12all/test/_neo4j.sh
+    - /u12all/test/_rethinkdb.sh
+    - /u12all/test/_riak.sh
 
   on_success:
     - if [ "$IS_PULL_REQUEST" != true ]; then docker push drydock/u12all:tip; fi
